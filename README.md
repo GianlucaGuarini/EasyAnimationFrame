@@ -1,4 +1,7 @@
-Unfortunatelly the new RequestAnimationFrame API does not allow us to set the framerate, but using EasyAnimationFrame.js you can run html5 canvas or html animations having the complete control of the framerate. Using this class you get a complete cross browser support thanks to the [Paul Irish polyfill] (http://paulirish.com/2011/requestanimationframe-for-smart-animating/) 
+Unfortunatelly the new RequestAnimationFrame API does not allow us to set the framerate,
+but using EasyAnimationFrame.js you can run html5 canvas or html animations having the complete
+control of the framerate. Using this script you get a complete cross browser support 
+thanks to the [Paul Irish polyfill] (http://paulirish.com/2011/requestanimationframe-for-smart-animating/) 
 
 ----------
 # DEMO
