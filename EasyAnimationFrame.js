@@ -1,12 +1,12 @@
 /**
  *
- * Version:     0.1.0
+ * Version:     0.1.1
  * Author:      Gianluca Guarini
  * Contact:     gianluca.guarini@gmail.com
  * Website:     http://www.gianlucaguarini.com/
  * Twitter:     @gianlucaguarini
  *
- * Copyright (c) 2012 Gianluca Guarini
+ * Copyright (c) 2013 Gianluca Guarini
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -35,7 +35,7 @@ var EasyAnimationFrame = (function ( callback , elm , fps ) {
     // Private Vars
     var self    = this,
         fps     = fps !== undefined ? fps : 1000 / 60,
-        stopped = false,
+        stopped = true,
         RqAnFr,end,start;
 
     // Public Methods
@@ -46,14 +46,14 @@ var EasyAnimationFrame = (function ( callback , elm , fps ) {
     *
     */
     this.startAnimation = function () {
-        start   = Number(new Date) + fps;
+        start   = Number( new Date() ) + fps;
         stopped = false;
         loop();
 
     };
     /*
     *
-    * @clearAnimation: this method stops immediately the animation 
+    * @clearAnimation: this method stops immediately the animation
     *
     */
     this.clearAnimation = function () {
@@ -67,7 +67,7 @@ var EasyAnimationFrame = (function ( callback , elm , fps ) {
     */
     this.updateFramerate = function ( framerate ) {
         fps = Number( framerate );
-        start   = Number( new Date ) + fps;
+        start   = Number( new Date() ) + fps;
     };
     /*
     *
@@ -85,31 +85,31 @@ var EasyAnimationFrame = (function ( callback , elm , fps ) {
     */
     var loop = function () {
         if ( !stopped ) {
-            RqAnFr = requestAnimFrame ( loop, elm )
-            frameController( Number( new Date ) );
+            RqAnFr = requestAnimFrame ( loop, elm );
+            frameController( Number( new Date() ) );
         }
     };
     /*
-    * 
+    *
     * this function call the callback function respecting the framerate passed to Animator.js
-    * 
+    *
     */
     var frameController = function ( currentTime ) {
         end = currentTime;
         var delta = start - end;
         if ( delta <= 0 ) {
             delta = fps;
-            start = Number( new Date ) + fps;
+            start = Number( new Date() ) + fps;
             callback();
-        } 
+        }
     };
     /* Paul Irish requestAnimationFrame Polyfill */
     var requestAnimFrame = (function(){
-        return  window.requestAnimationFrame   || 
-            window.webkitRequestAnimationFrame || 
-            window.mozRequestAnimationFrame    || 
-            window.oRequestAnimationFrame      || 
-            window.msRequestAnimationFrame     || 
+        return  window.requestAnimationFrame   ||
+            window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame    ||
+            window.oRequestAnimationFrame      ||
+            window.msRequestAnimationFrame     ||
             function(/* function */ callback, /* DOMElement */ element){
                 return window.setTimeout(callback, fps);
         };
@@ -120,10 +120,8 @@ var EasyAnimationFrame = (function ( callback , elm , fps ) {
             window.mozCancelRequestAnimationFrame   ||
             window.oCancelRequestAnimationFrame     ||
             window.msCancelRequestAnimationFrame    ||
-            clearTimeout
+            clearTimeout;
     })();
 
     return this;
 });
-
-
