@@ -1,6 +1,6 @@
 /**
  *
- * Version:     0.1.1
+ * Version:     0.1.2
  * Author:      Gianluca Guarini
  * Contact:     gianluca.guarini@gmail.com
  * Website:     http://www.gianlucaguarini.com/
@@ -30,11 +30,11 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  **/
 
-var EasyAnimationFrame = (function ( callback , elm , fps ) {
+var EasyAnimationFrame = (function ( callback , elm , frameDelay ) {
 
     // Private Vars
     var self    = this,
-        fps     = fps !== undefined ? fps : 1000 / 60,
+        frameDelay     = frameDelay !== undefined ? frameDelay : 1000 / 60,
         stopped = true,
         RqAnFr,end,start;
 
@@ -46,7 +46,7 @@ var EasyAnimationFrame = (function ( callback , elm , fps ) {
     *
     */
     this.startAnimation = function () {
-        start   = Number( new Date() ) + fps;
+        start   = Number( new Date() ) + frameDelay;
         stopped = false;
         loop();
 
@@ -62,20 +62,20 @@ var EasyAnimationFrame = (function ( callback , elm , fps ) {
     };
     /*
     *
-    * @changeFramerate: this method can update the framerate on the fly
+    * @updateFrameDelay: this method can update the framedelay on the fly
     *
     */
-    this.updateFramerate = function ( framerate ) {
-        fps = Number( framerate );
-        start   = Number( new Date() ) + fps;
+    this.updateFrameDelay = function ( newFrameDelay ) {
+        frameDelay = Number( newFrameDelay );
+        start   = Number( new Date() ) + frameDelay;
     };
     /*
     *
-    * @getFramerate: it could be used to get the current framerate
+    * @getFrameDelay: it could be used to get the current framedelay
     *
     */
-    this.getFramerate = function () {
-        return fps;
+    this.getFrameDelay = function () {
+        return frameDelay;
     };
     // Private methods
     /*
@@ -98,8 +98,8 @@ var EasyAnimationFrame = (function ( callback , elm , fps ) {
         end = currentTime;
         var delta = start - end;
         if ( delta <= 0 ) {
-            delta = fps;
-            start = Number( new Date() ) + fps;
+            delta = frameDelay;
+            start = Number( new Date() ) + frameDelay;
             callback();
         }
     };
