@@ -1,8 +1,8 @@
 var demo 				= document.getElementById('demo'),
 	start 				= document.getElementById('start'),
 	stop 				= document.getElementById('stop'),
-	framerate 		 	= document.getElementById('framerate'),
-	currentFramerate 	= document.getElementById('currentFramerate'),
+	frameDelay 		 	= document.getElementById('frameDelay'),
+	currentFrameDelay 	= document.getElementById('currentFrameDelay'),
 	i 					= 0;
 
 var animate = function () {
@@ -12,7 +12,7 @@ var animate = function () {
 };
 
 window.onload = function () {
-	// callback , DOM element to animate , fps
+	// callback , DOM element to animate , FrameDelay
 	var animator = new EasyAnimationFrame( animate, demo , 150);
 	
 	//animator.startAnimation(); // if you want start automatically the animation uncomment this line
@@ -22,11 +22,11 @@ window.onload = function () {
 	stop.onclick = animator.clearAnimation;
 	start.onclick = animator.startAnimation;
 
-	currentFramerate.innerHTML = animator.getFramerate();
+	currentFramerate.innerHTML = animator.getFrameDelay();
 
-	framerate.onblur = function () {
-		animator.updateFramerate(this.value);
-		currentFramerate.innerHTML = animator.getFramerate();
+	frameDelay.onblur = function () {
+		animator.updateFrameDelay(this.value);
+		currentFrameDelay.innerHTML = animator.getFrameDelay();
 	};
 		
 };
