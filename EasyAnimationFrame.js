@@ -1,6 +1,6 @@
 /**
  *
- * Version:     0.1.2
+ * Version:     0.1.3
  * Author:      Gianluca Guarini
  * Contact:     gianluca.guarini@gmail.com
  * Website:     http://www.gianlucaguarini.com/
@@ -111,7 +111,7 @@ var EasyAnimationFrame = (function ( callback , elm , frameDelay ) {
             window.oRequestAnimationFrame      ||
             window.msRequestAnimationFrame     ||
             function(/* function */ callback, /* DOMElement */ element){
-                return window.setTimeout(callback, fps);
+                return window.setTimeout(callback, frameDelay);
         };
     })();
     var cancelRequestAnimFrame = ( function() {
