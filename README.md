@@ -1,7 +1,7 @@
 What is EasyAnimationFrame for?
 - To make easy javascript loops ( optimized for animations ) using the new RequestAnimationFrame API
 - To control and get precisely the framerate of your loops
-- To stop and restart any kind of loop whitout using any javascript timer ( setTimeout or setInterval )
+- To stop and restart any kind of loop without using any javascript timer ( setTimeout or setInterval )
 - Thanks to <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">Paul Irish polyfill</a> it is supported also by old browsers ( IE7+ )
 
 ----------
@@ -13,7 +13,7 @@ What is EasyAnimationFrame for?
 # USAGE
 You must create an instance of the script setting the loop function, 
 the element you would like to animate (this could be also null),
-and then the initial framerate
+and then the initial framedelay ( it is the time expressed in ms that the script should wait each frame before triggering the loop function )
 
 <pre>
   var animator = new EAF(loop_Function, html_Element, initial_frame_delay);
