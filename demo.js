@@ -7,6 +7,7 @@ var demo 				= document.getElementById('demo'),
 	i 					= 0,
 	animator;
 
+
 var animate = function () {
 	i ++;
 	demo.innerHTML = i;
@@ -16,14 +17,19 @@ var animate = function () {
 
 window.onload = function () {
 	// callback , DOM element to animate , FrameDelay
+
 	animator = new EasyAnimationFrame( animate, demo , 150);
 	//animator.startAnimation(); // autostart
+
+
 
 	// Ui controllers
 	stop.onclick = animator.clearAnimation;
 	start.onclick = animator.startAnimation;
 
+
 	currentFrameDelay.innerHTML = animator.getFrameDelay();
+
 
 	frameDelay.onblur = function () {
 		animator.updateFrameDelay(this.value);

@@ -1,6 +1,10 @@
 /**
  *
+<<<<<<< HEAD
  * Version:     0.1.2
+=======
+ * Version:     0.1.3
+>>>>>>> fe4dea650dab16106843562c5d2d15c53f83955c
  * Author:      Gianluca Guarini
  * Contact:     gianluca.guarini@gmail.com
  * Website:     http://www.gianlucaguarini.com/
@@ -30,6 +34,7 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  **/
 
+
 ;(function(document,window,undefined) {
     //"use strict";
     // window performance polyfill http://gent.ilcore.com/2012/06/better-timer-for-javascript.html
@@ -42,9 +47,10 @@
                 performance.webkitNow ||
                 function() { return new Date().getTime(); };
         })();
-        var EasyAnimationFrame = (function ( callback , elm , frameDelay ) {
+    var EasyAnimationFrame = (function ( callback , elm , frameDelay ) {
 
         
+
 
         // Private Vars
         var self            = this,
@@ -52,6 +58,7 @@
             _framerate      = 0,
             _stopped        = true,
             _RqAnFr,_start,_delayRange,_frameTicker;
+
 
         // Public Methods
 
