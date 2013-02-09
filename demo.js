@@ -18,7 +18,7 @@ var animate = function () {
 window.onload = function () {
 	// callback , DOM element to animate , FrameDelay
 
-	animator = new EasyAnimationFrame( animate, demo , 150);
+	animator = new EAF( animate, demo , 150);
 	//animator.startAnimation(); // autostart
 
 

@@ -1,7 +1,8 @@
-Unfortunatelly the new RequestAnimationFrame API does not allow us to control the framerate,
-but using EasyAnimationFrame.js you can run html5 canvas or html animations having the complete
-control of the framerate setting the delay between each frame. Using this script you get a complete cross browser support 
-thanks to the [Paul Irish polyfill] (http://paulirish.com/2011/requestanimationframe-for-smart-animating/) 
+What is EasyAnimationFrame for?
+- To make easy javascript loops ( optimized for animations ) using the new RequestAnimationFrame API
+- To control and get precisely the framerate of your loops
+- To stop and restart any kind of loop whitout using any javascript timer ( setTimeout or setInterval )
+- Thanks to <a href="http://paulirish.com/2011/requestanimationframe-for-smart-animating/">Paul Irish polyfill</a> it is supported also by old browsers ( IE7+ )
 
 ----------
 # DEMO
@@ -15,7 +16,7 @@ the element you would like to animate (this could be also null),
 and then the initial framerate
 
 <pre>
-  var animator = new EasyAnimationFrame(loop_Function, html_Element, initial_frame_delay);
+  var animator = new EAF(loop_Function, html_Element, initial_frame_delay);
   animator.startAnimation();
 </pre>
 
