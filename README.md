@@ -26,3 +26,4 @@ and then the initial framerate
 - <code>clearAnimation</code> : it stops immediately the animation.
 - <code>getFrameDelay</code> : this returns the current frame delay
 - <code>updateFrameDelay</code>: it updates the frame delay and could be used also on the fly
+- <code>getFramerate</code>: It returns the framerate of the current animation
