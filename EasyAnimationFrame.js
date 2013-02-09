@@ -1,12 +1,12 @@
 /**
  *
- * Version:     0.1.0
+ * Version:     0.1.2
  * Author:      Gianluca Guarini
  * Contact:     gianluca.guarini@gmail.com
  * Website:     http://www.gianlucaguarini.com/
  * Twitter:     @gianlucaguarini
  *
- * Copyright (c) 2012 Gianluca Guarini
+ * Copyright (c) 2013 Gianluca Guarini
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -30,100 +30,135 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  **/
 
-var EasyAnimationFrame = (function ( callback , elm , fps ) {
+;(function(document,window,undefined) {
+    //"use strict";
+    // window performance polyfill http://gent.ilcore.com/2012/06/better-timer-for-javascript.html
+    window.performance = window.performance || {};
+    performance.now = (function() {
+        return  performance.now       ||
+                performance.mozNow    ||
+                performance.msNow     ||
+                performance.oNow      ||
+                performance.webkitNow ||
+                function() { return new Date().getTime(); };
+        })();
+        var EasyAnimationFrame = (function ( callback , elm , frameDelay ) {
 
-    // Private Vars
-    var self    = this,
-        fps     = fps !== undefined ? fps : 1000 / 60,
-        stopped = false,
-        RqAnFr,end,start;
+        
 
-    // Public Methods
+        // Private Vars
+        var self            = this,
+            _frameDelay     = frameDelay !== undefined ? frameDelay : 1000 / 60,
+            _framerate      = 0,
+            _stopped        = true,
+            _RqAnFr,_start,_delayRange,_frameTicker;
 
-    /*
-    *
-    * @startAnimation: this method allows you to start the the animation just when you need it
-    *
-    */
-    this.startAnimation = function () {
-        start   = Number(new Date) + fps;
-        stopped = false;
-        loop();
+        // Public Methods
 
-    };
-    /*
-    *
-    * @clearAnimation: this method stops immediately the animation 
-    *
-    */
-    this.clearAnimation = function () {
-        cancelRequestAnimFrame ( RqAnFr );
-        stopped = true;
-    };
-    /*
-    *
-    * @changeFramerate: this method can update the framerate on the fly
-    *
-    */
-    this.updateFramerate = function ( framerate ) {
-        fps = Number( framerate );
-        start   = Number( new Date ) + fps;
-    };
-    /*
-    *
-    * @getFramerate: it could be used to get the current framerate
-    *
-    */
-    this.getFramerate = function () {
-        return fps;
-    };
-    // Private methods
-    /*
-    * this function loops on itself using the requestAnimationFrame API
-    * the loop can not start twice if the animation is still running
-    *
-    */
-    var loop = function () {
-        if ( !stopped ) {
-            RqAnFr = requestAnimFrame ( loop, elm )
-            frameController( Number( new Date ) );
-        }
-    };
-    /*
-    * 
-    * this function call the callback function respecting the framerate passed to Animator.js
-    * 
-    */
-    var frameController = function ( currentTime ) {
-        end = currentTime;
-        var delta = start - end;
-        if ( delta <= 0 ) {
-            delta = fps;
-            start = Number( new Date ) + fps;
-            callback();
-        } 
-    };
-    /* Paul Irish requestAnimationFrame Polyfill */
-    var requestAnimFrame = (function(){
-        return  window.requestAnimationFrame   || 
-            window.webkitRequestAnimationFrame || 
-            window.mozRequestAnimationFrame    || 
-            window.oRequestAnimationFrame      || 
-            window.msRequestAnimationFrame     || 
-            function(/* function */ callback, /* DOMElement */ element){
-                return window.setTimeout(callback, fps);
+        /*
+        *
+        * this method allows you to start the the animation just when you need it
+        *
+        */
+        this.startAnimation = function () {
+            _start   = window.performance.now();
+            _frameTicker = _start;
+            _delayRange = _start + _frameDelay;
+            _stopped = false;
+            loop();
+
         };
-    })();
-    var cancelRequestAnimFrame = ( function() {
-        return window.cancelAnimationFrame          ||
-            window.webkitCancelRequestAnimationFrame||
-            window.mozCancelRequestAnimationFrame   ||
-            window.oCancelRequestAnimationFrame     ||
-            window.msCancelRequestAnimationFrame    ||
-            clearTimeout
-    })();
+        /*
+        *
+        * stop immediately the animation
+        *
+        */
+        this.clearAnimation = function () {
+            cancelRequestAnimFrame ( _RqAnFr );
+            _stopped = true;
+        };
+        /*
+        *
+        * update the framedelay on the fly
+        *
+        */
+        this.updateFrameDelay = function ( newFrameDelay ) {
+            _frameDelay = Number( newFrameDelay );
+            _delayRange   = window.performance.now() + _frameDelay;
+        };
+        /*
+        *
+        * it could be used to get the current framedelay
+        *
+        */
+        this.getFrameDelay = function () {
+            return _frameDelay;
+        };
+        /*
+        *
+        * return the framerate of the current animation
+        *
+        */
+        this.getFramerate = function () {
+            return _framerate;
+        };
 
-    return this;
-});
+        // Private methods
+
+        /*
+        * this function loops on itself using the requestAnimationFrame API
+        * the loop can not start twice if the animation is still running
+        *
+        */
+        var loop = function ( now ) {
+
+            if ( !_stopped ) {
+                _RqAnFr = requestAnimFrame ( loop, elm );
+                frameController(  window.performance.now() );
+            }
+        };
+        /*
+        *
+        * this function call the callback function respecting the framerate passed to Animator.js
+        *
+        */
+        var frameController = function ( now ) {
+            var delta = _delayRange - now;
+            
+            if ( delta <= 0 ) {
+                delta = _frameDelay;
+                _delayRange = now + _frameDelay;
+                callback();
+                if ( _frameTicker < now + 1000) {
+                    _framerate = Math.round( 1000  / ( now - _frameTicker ) );
+                    _frameTicker = now;
+                }
+            }
+        };
+        /* Paul Irish requestAnimationFrame Polyfill */
+        var requestAnimFrame = (function(){
+            return  window.requestAnimationFrame   ||
+                window.webkitRequestAnimationFrame ||
+                window.mozRequestAnimationFrame    ||
+                window.oRequestAnimationFrame      ||
+                window.msRequestAnimationFrame     ||
+                function(/* function */ callback, /* DOMElement */ element){
+                    return window.setTimeout(callback, _frameDelay);
+            };
+        })();
+        var cancelRequestAnimFrame = ( function() {
+            return window.cancelAnimationFrame          ||
+                window.webkitCancelRequestAnimationFrame||
+                window.mozCancelRequestAnimationFrame   ||
+                window.oCancelRequestAnimationFrame     ||
+                window.msCancelRequestAnimationFrame    ||
+                clearTimeout;
+        })();
+
+        return this;
+    });
+    
+    window.EasyAnimationFrame = window.EAF = EasyAnimationFrame;
 
 
+}(document,window));
