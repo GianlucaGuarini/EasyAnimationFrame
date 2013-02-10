@@ -1,10 +1,6 @@
 /**
  *
-<<<<<<< HEAD
- * Version:     0.1.2
-=======
  * Version:     0.1.3
->>>>>>> fe4dea650dab16106843562c5d2d15c53f83955c
  * Author:      Gianluca Guarini
  * Contact:     gianluca.guarini@gmail.com
  * Website:     http://www.gianlucaguarini.com/
