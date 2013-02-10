@@ -16,7 +16,7 @@ the element you would like to animate (this could be also null),
 and then the initial framedelay ( it is the time expressed in ms that the script should wait each frame before triggering the loop function )
 
 <pre>
-  var animator = new EAF(loop_Function, html_Element, initial_frame_delay);
+  var animator = new EAF(loop_Function, html_Element, initial_frame_delay); // the last two arguments are optional
   animator.startAnimation();
 </pre>
 
