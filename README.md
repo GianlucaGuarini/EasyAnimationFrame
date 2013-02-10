@@ -17,9 +17,9 @@ and then the initial framedelay
 
 # OPTIONS
 
-<code>loop_Function</code> : the function you want to loop
-<code>html_Element</code> : { optional, by default is null } the DOM element you are manipulating ,generally it could be an HTML5 canvas
-<code>initial_frame_delay</code> : { optional int, by default is 0} the time expressed in ms EAF should wait each frame before triggering the loop function )
+- <code>loop_Function</code> : the function you want to loop
+- <code>html_Element</code> : { optional, by default is null } the DOM element you are manipulating ,generally it could be an HTML5 canvas
+- <code>initial_frame_delay</code> : { optional int, by default is 0} the time expressed in ms EAF should wait each frame before triggering the loop function )
 
 <pre>
   var animator = new EAF(loop_Function, html_Element, initial_frame_delay); 
