@@ -50,7 +50,7 @@
 			_frameDelay     = frameDelay || 0,
 			_framerate      = 0,
 			_stopped        = true,
-			_RqAnFr,_start,_delayRange,_frameTicker;
+			_RqAnFr,_delayRange,_frameTicker;
 
 
 		// Public Methods
@@ -61,9 +61,8 @@
 		*
 		*/
 		this.startAnimation = function () {
-			_start   = window.performance.now();
-			_frameTicker = _start;
-			_delayRange = _start + _frameDelay;
+			_frameTicker = performance.now();
+			_delayRange = _frameTicker + _frameDelay;
 			_stopped = false;
 			loop();
 
@@ -84,7 +83,7 @@
 		*/
 		this.updateFrameDelay = function ( newFrameDelay ) {
 			_frameDelay = Number( newFrameDelay );
-			_delayRange   = window.performance.now() + _frameDelay;
+			_delayRange   = performance.now() + _frameDelay;
 		};
 		/*
 		*
@@ -106,30 +105,30 @@
 		// Private methods
 
 		/*
+		*
 		* this function loops on itself using the requestAnimationFrame API
 		* the loop can not start twice if the animation is still running
 		*
 		*/
-		var loop = function ( now ) {
+		var loop = function () {
 
 			if ( !_stopped ) {
+				frameController( performance.now() );
 				_RqAnFr = requestAnimFrame ( loop, elm );
-				frameController(  window.performance.now() );
 			}
 		};
 		/*
 		*
-		* this function call the callback function according to the framedalay passed to EAF
+		* this function calls the callback function according to the framedalay passed to EAF
 		*
 		*/
 		var frameController = function ( now ) {
 			var delta = _delayRange - now;
-			
 			if ( delta <= 0 ) {
 				delta = _frameDelay;
 				_delayRange = now + _frameDelay;
 				if ( _frameTicker < now + 1000) {
-					_framerate = ~~( 1000  / ( now - _frameTicker ) );
+					_framerate = Math.round( 1000  / ( now - _frameTicker ) );
 					_frameTicker = now;
 					callback();
 				}
