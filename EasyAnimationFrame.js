@@ -1,6 +1,6 @@
 /**
  *
- * Version:     0.1.4
+ * Version:     0.1.5
  * Author:      Gianluca Guarini
  * Contact:     gianluca.guarini@gmail.com
  * Website:     http://www.gianlucaguarini.com/
@@ -73,7 +73,7 @@
 		*
 		*/
 		this.clearAnimation = function () {
-			cancelRequestAnimFrame ( _RqAnFr );
+			cancelAnimFrame ( _RqAnFr );
 			_stopped = true;
 		};
 		/*
@@ -142,15 +142,12 @@
 				window.oRequestAnimationFrame      ||
 				window.msRequestAnimationFrame     ||
 				function(/* function */ callback, /* DOMElement */ element){
-					return window.setTimeout(callback, _frameDelay);
+					return window.setTimeout(callback, (1000 / 60) + _frameDelay);
 			};
 		})();
-		var cancelRequestAnimFrame = ( function() {
-			return window.cancelAnimationFrame          ||
-				window.webkitCancelRequestAnimationFrame||
-				window.mozCancelRequestAnimationFrame   ||
-				window.oCancelRequestAnimationFrame     ||
-				window.msCancelRequestAnimationFrame    ||
+		var cancelAnimFrame = (function() {
+			return window.cancelAnimationFrame      ||
+				window.webkitCancelRequestAnimationFrame	||
 				clearTimeout;
 		})();
 
