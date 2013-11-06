@@ -1,6 +1,6 @@
 /**
  *
- * Version:     0.1.5
+ * Version:     0.1.6
  * Author:      Gianluca Guarini
  * Contact:     gianluca.guarini@gmail.com
  * Website:     http://www.gianlucaguarini.com/
@@ -61,6 +61,7 @@
 		*
 		*/
 		this.startAnimation = function () {
+			if (!_stopped) return;
 			_frameTicker = performance.now();
 			_delayRange = _frameTicker + _frameDelay;
 			_stopped = false;
